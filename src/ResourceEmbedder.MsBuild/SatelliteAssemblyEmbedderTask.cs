@@ -2,6 +2,7 @@
 using Mono.Cecil;
 using ResourceEmbedder.Core;
 using ResourceEmbedder.Core.Cecil;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -33,7 +34,7 @@ namespace ResourceEmbedder.MsBuild
             // run in object dir (=AssemblyPath) as we will run just after satellite assembly generated and ms build will then copy the output to target dir
             string inputAssembly = Path.Combine(ProjectDirectory, AssemblyPath);
             var workingDir = new FileInfo(inputAssembly).DirectoryName;
-            if (IsOlderThanNet46(inputAssembly))
+            if (!IsNet46OrAbove())
             {
                 // resource embedder doesn't support < .Net 4.0 due to .Net not invoking resource assembly event prior to .Net 4: https://msdn.microsoft.com/en-us/library/system.appdomain.assemblyresolve.aspx
                 // .Net 4.6 is also the new minimum target to ensure cross compile with .Net Standard works
@@ -169,65 +170,11 @@ namespace ResourceEmbedder.MsBuild
             return null;
         }
 
-        /// <summary>
-        /// Returns whether the specific file is an assembly that was compiled with an older version than .Net 4
-        /// </summary>
-        /// <param name="inputAssembly"></param>
-        /// <returns></returns>
-        private bool IsOlderThanNet46(string inputAssembly)
-        {
-            // easiest method would be to load the assembly and read out Assembly.ImageRuntimeVersion
-            // but then we would lock the assembly file
-            // only workaround would be to load into a different AppDomain but I'm too stupid to get it to work, so I'll use corflags.exe
-
-            var corFlagsReader = WindowsSdkHelper.FindCorFlagsExe();
-            if (corFlagsReader == null || !File.Exists(corFlagsReader))
-            {
-                Log.LogWarning("Could not determine version of assembly. If you are compiling an assembly targeting an older version than .Net 4 then resources will not work (consider removing Resource.Embedder from that project). If you are targeting .Net 4 or above, everything should be fine. See https://github.com/MarcStan/Resource.Embedder/issues/3 for details.");
-                return false; // without corflags to check version, just process all silently, although corflags is distributed with every .Net version so it should always exist unless user deleted it
-            }
-
-            var p = new Process
-            {
-                StartInfo = new ProcessStartInfo(corFlagsReader, inputAssembly)
-                {
-                    CreateNoWindow = true,
-                    RedirectStandardOutput = true,
-                    UseShellExecute = false
-                }
-            };
-            bool old = false;
-            p.Start();
-            using (var reader = p.StandardOutput)
-            {
-                var r = reader.ReadToEnd();
-                var d = r;
-                var lines = d.Contains("\n") ? d.Replace("\r", "").Split('\n') : new[] { d };
-                var m = lines.FirstOrDefault(l => l.Trim().StartsWith("Version") && l.Contains(":"));
-                // output is in format:
-                // Version        : v4.0...
-                // Version        : v2.0...
-
-                // TODO: detect .Net 4.6 by build number
-                // check if old format, all else is fine
-                if (m != null && m.Split(':')[1].Trim().StartsWith("v2"))
-                {
-                    old = true;
-                }
-            }
-            if (!p.WaitForExit(5000))
-            {
-                try
-                {
-                    p.Kill();
-                }
-                catch
-                {
-                }
-                return true;
-            }
-            p.Dispose();
-            return old;
-        }
+        // officially recommended check from Microsoft is registry check of release version but
+        // that doesn't work with .Net Core (< 3.0) or non-windows platforms (https://stackoverflow.com/a/26455602)
+        // instead check for newly added type in .Net 4.6 (from https://stackoverflow.com/a/43495701)
+        // will work as long as the type is not removed in a future version
+        private bool IsNet46OrAbove()
+            => Type.GetType("System.AppContext, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089", false) != null;
     }
 }

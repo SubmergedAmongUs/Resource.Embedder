@@ -1,3 +1,7 @@
+**2.0.1**
+
+Fix bug for systems with only .Net >= 4.7.2 installed (embedder wouldn't run)
+
 **2.0.0**
 
 * Added support for .Net Standard 2.0/.Net Core 2.0
