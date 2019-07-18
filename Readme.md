@@ -31,9 +31,9 @@ No more need for deploying the satellite assembly folders.
 
 * Compatibility issue with Fody/Costura
 
-There is an incompatibility with Fody 4.x, I suggest you downgrade to Costura 3.3.2 in the meantime (which uses Fody \< 4).
+There is an incompatibility with Fody 4.x, I suggest you upgrade to Fody 5.0.6+ or downgrade to Costura 3.3.2 in the meantime (which uses Fody \< 4).
 
-Fody 4 embeds its class multiple times into the same assembly if used in conjunction with resource embedder. This will cause a BadImageEsxception on launch ([#13](https://github.com/MarcStan/Resource.Embedder/issues/13)).
+Fody 4 embeds its class multiple times into the same assembly if used in conjunction with resource embedder. This will cause a BadImageException on launch ([#13](https://github.com/MarcStan/Resource.Embedder/issues/13)).
 
 * SDK style project + PostBuild
 
