@@ -19,7 +19,7 @@ If you use Fody.Costura this may interest you as well (or vica versa).
 
 Supports: .Net Standard 2.0, .Net Core 2.0 and Net 4.6 and above.
     </Description>
-    <Authors>MarcStan</Authors>
+    <Authors>Marc Stan</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/MarcStan/Resource.Embedder</RepositoryUrl>
     <PackageIconUrl>https://github.com/MarcStan/Resource.Embedder/raw/master/ico/package.png</PackageIconUrl>
@@ -32,7 +32,7 @@ Supports: .Net Standard 2.0, .Net Core 2.0 and Net 4.6 and above.
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mono.Cecil" Version="0.10.3" PrivateAssets="All" />
+    <PackageReference Include="Mono.Cecil" Version="0.11.0" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup Condition="$(TargetFramework) == 'netstandard2.0'">

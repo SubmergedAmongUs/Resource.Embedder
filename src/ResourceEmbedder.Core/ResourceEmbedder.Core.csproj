@@ -12,7 +12,7 @@ Library to make embedding files as resources into other executables/libraries du
 
 Also supports injecting code as module initializer (code is executed when the assembly is first loaded).
     </Description>
-    <Authors>MarcStan</Authors>
+    <Authors>Marc Stan</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/MarcStan/Resource.Embedder</RepositoryUrl>
     <PackageIconUrl>https://github.com/MarcStan/Resource.Embedder/raw/master/ico/package.png</PackageIconUrl>
@@ -24,7 +24,7 @@ Also supports injecting code as module initializer (code is executed when the as
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mono.Cecil" Version="0.10.3" />
+    <PackageReference Include="Mono.Cecil" Version="0.11.0" />
   </ItemGroup>
 
 </Project>
