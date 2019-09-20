@@ -2,8 +2,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net46</TargetFrameworks>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <PackageOutputPath>$(MSBuildThisFileDirectory)..\..\</PackageOutputPath>
     <BuildOutputTargetFolder>tasks</BuildOutputTargetFolder>
     <!-- include all refs -->
     <NoPackageAnalysis>true</NoPackageAnalysis>
@@ -26,16 +24,11 @@ Supports: .Net Standard 2.0, .Net Core 2.0 and Net 4.6 and above.
     <RepositoryUrl>https://github.com/MarcStan/Resource.Embedder</RepositoryUrl>
     <PackageIconUrl>https://github.com/MarcStan/Resource.Embedder/raw/master/ico/package.png</PackageIconUrl>
     <PackageTags>Embed, Resource, Satellite assemblies, Localization, Cecil</PackageTags>
-    <NuspecProperties>version=$(Version)</NuspecProperties>
   </PropertyGroup>
 
   <ItemGroup>
     <Content Include="build\*" PackagePath="build\" />
     <Content Include="buildMultiTargeting\*" PackagePath="buildMultiTargeting\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="..\AssemblyInfoInc.cs" Link="Properties\AssemblyInfoInc.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -53,11 +46,6 @@ Supports: .Net Standard 2.0, .Net Core 2.0 and Net 4.6 and above.
   <ItemGroup>
     <ProjectReference Include="..\ResourceEmbedder.Core\ResourceEmbedder.Core.csproj" PrivateAssets="All" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
-
 
   <Target Name="PackTaskDependencies" BeforeTargets="GenerateNuspec">
     <!--

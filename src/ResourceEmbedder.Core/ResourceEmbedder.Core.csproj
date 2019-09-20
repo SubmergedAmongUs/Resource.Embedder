@@ -2,8 +2,6 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net46</TargetFrameworks>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <PackageOutputPath>$(MSBuildThisFileDirectory)..\..\</PackageOutputPath>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -19,7 +17,6 @@ Also supports injecting code as module initializer (code is executed when the as
     <RepositoryUrl>https://github.com/MarcStan/Resource.Embedder</RepositoryUrl>
     <PackageIconUrl>https://github.com/MarcStan/Resource.Embedder/raw/master/ico/package.png</PackageIconUrl>
     <PackageTags>Embed, Resource, Satellite assemblies, Localization, Cecil</PackageTags>
-    <NuspecProperties>version=$(Version)</NuspecProperties>
   </PropertyGroup>
   
   <PropertyGroup>
@@ -27,15 +24,7 @@ Also supports injecting code as module initializer (code is executed when the as
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\AssemblyInfoInc.cs" Link="Properties\AssemblyInfoInc.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Mono.Cecil" Version="0.10.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>
