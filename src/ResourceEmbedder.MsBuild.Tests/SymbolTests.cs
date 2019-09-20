@@ -66,6 +66,7 @@ namespace ResourceEmbedder.MsBuild.Tests
         }
 
         [Test]
+        [Ignore("Crashes on server")]
         public void MsBuildBasedEmbeddingWithPortableSymbolsWorksInNetCore()
         {
             // copy elsewhere and ensure localization works
