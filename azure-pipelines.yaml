@@ -21,10 +21,13 @@ pool:
   vmImage: 'windows-latest'
 variables:
   BuildConfiguration: 'Release'
+  BuildPlatform: 'Any CPU'
   Major: '2'
   Minor: '0'
   Patch: '2'
   PackageVersion: '$(Major).$(Minor).$(Patch)'
+  # www.donovanbrown.com/post/Stop-wasting-time-during-NET-Core-builds
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
 
 steps:
 - checkout: self
@@ -43,17 +46,25 @@ steps:
 - task: MSBuild@1
   inputs:
     solution: '**/*.sln'
-    platform: 'Any CPU'
+    platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
-    msbuildArguments: '/p:Version=$(PackageVersion).$(Build.BuildId) /p:InformationalVersion=$(SemanticVersion)'
+    msbuildArguments: '-m /p:Version=$(PackageVersion).$(Build.BuildId) /p:InformationalVersion=$(SemanticVersion)'
 
 - task: VSTest@2
   inputs:
     testSelector: 'testAssemblies'
-    testAssemblyVer2: '**\*Test*.dll'
+    testAssemblyVer2: |
+      **\*Test*.dll
+      !**\DotNetCore.Tests.dll
     searchFolder: '$(System.DefaultWorkingDirectory)'
-    platform: 'Any CPU'
+    platform: '$(BuildPlatform)'
     configuration: '$(BuildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: '**/DotNetCore.Tests.csproj'
+    arguments: '-c $(BuildConfiguration) --no-build'
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet pack ResourceEmbedder.Core'

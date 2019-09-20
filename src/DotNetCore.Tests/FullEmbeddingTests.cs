@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace DotNetCore.Tests
 {
-    [TestClass]
     public class FullEmbeddingTests
     {
-        [TestMethod]
+        [Test]
         public async Task NetCoreWebProjectShouldWorkWithEmbeddedResources()
         {
             const string rel = "../../../../testmodules/WebDotNetCore";
@@ -41,7 +40,7 @@ namespace DotNetCore.Tests
             }
         }
 
-        [TestMethod]
+        [Test]
         public void CliShouldLocalize()
         {
             const string rel = "../../../../testmodules/DotNetCoreCli";

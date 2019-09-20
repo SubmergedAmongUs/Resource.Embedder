@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
+using NUnit.Framework;
 using ResourceEmbedder.Core;
 using ResourceEmbedder.Core.Cecil;
 using System;
@@ -10,11 +10,6 @@ using System.Reflection;
 
 namespace DotNetCore.Tests
 {
-    // DO NOT switch to NUNIT for this test
-    // for some reason it will always use nunit adapter 3.10 (even if you have selected another version)
-    // 3.10 ships with Mono.Cecil dll 0.10.0.0 and for some reason it is loaded as the prefered one (even if directly referencing 0.10.3)
-    // thus it sublty crashes on any breaking API changes but works fine for other stuff..
-    [TestClass]
     public class InjectCodeTests
     {
         private static string AssemblyDirectory()
@@ -25,7 +20,7 @@ namespace DotNetCore.Tests
             return new FileInfo(path).DirectoryName;
         }
 
-        [TestMethod]
+        [Test]
         public void InjectCodeIntMultiTargetedLibrary()
         {
             var file = Path.Combine(AssemblyDirectory(), "LocalizedPluginTest.dll");
