@@ -70,7 +70,12 @@ namespace ResourceEmbedder.MsBuild.Tests
         {
             // copy elsewhere and ensure localization works
             var copyDir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())).FullName;
-            var configuration = new DirectoryInfo(AssemblyDirectory()).Parent.Name;
+            var configuration =
+#if DEBUG
+                "Debug";
+#else
+                "Release";
+#endif
             // must copy from original dir as .Net Core 2.2. can't be referenced from full framework..
             // not ideal as it doesn't ensure build is up to date..
             // also must copy multiple files for .net core

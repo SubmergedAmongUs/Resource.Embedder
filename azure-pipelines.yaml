@@ -50,17 +50,19 @@ steps:
     configuration: '$(BuildConfiguration)'
     msbuildArguments: '-m /p:Version=$(PackageVersion).$(Build.BuildId) /p:InformationalVersion=$(SemanticVersion)'
 
-- task: VSTest@2
+- task: DotNetCoreCLI@2
+  displayName: 'Run .Net Framework 4.6 tests'
   inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: |
+    command: 'custom'
+    projects: |
       **\*Test*.dll
       !**\DotNetCore.Tests.dll
-    searchFolder: '$(System.DefaultWorkingDirectory)'
-    platform: '$(BuildPlatform)'
-    configuration: '$(BuildConfiguration)'
+      !**\obj\**
+    custom: 'vstest'
+    arguments: '--Framework:".NETFramework,Version=4.6"'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Run .Net Core tests'
   inputs:
     command: 'test'
     projects: '**/DotNetCore.Tests.csproj'
