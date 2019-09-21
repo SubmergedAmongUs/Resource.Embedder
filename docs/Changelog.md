@@ -1,3 +1,5 @@
+# Changelog
+
 **2.0.1**
 
 Fix bug for systems with only .Net >= 4.7.2 installed (embedder wouldn't run)
