@@ -16,7 +16,7 @@ Also supports injecting code as module initializer (code is executed when the as
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/MarcStan/Resource.Embedder</RepositoryUrl>
     <PackageIconUrl>https://github.com/MarcStan/Resource.Embedder/raw/master/ico/package.png</PackageIconUrl>
-    <PackageTags>Embed, Resource, Satellite assemblies, Localization, Cecil</PackageTags>
+    <PackageTags>Embed Resource Satellite assemblies Localization Cecil</PackageTags>
   </PropertyGroup>
   
   <PropertyGroup>
