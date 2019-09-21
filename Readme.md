@@ -18,9 +18,11 @@ Only use the Core package if you want to [manually inject resources](docs/Core%2
 ## How it works
 
 Before: Localization files (`<Exe name>.resources.dll`) are in seperate folders per language:
+
 ![before](ico/sample_before.png)
 
 After adding the nuget and recompiling: No more seperate files, all localization resources are embedded into exe/dll and are loaded automatically:
+
 ![after](ico/sample_after.png)
 
 ## Why?
@@ -32,7 +34,7 @@ In order to embed any reference dll's, consider using [Costura](https://github.c
 # Links 
 
 * [Known issues](docs/Known%20issues.md)
-* [Changelog.md](docs/Changelog)
+* [Changelog](docs/Changelog.md)
 * [Core package usage](docs/Core%20package%20usage.md)
 * [Internals](docs/Internals.md)
 
