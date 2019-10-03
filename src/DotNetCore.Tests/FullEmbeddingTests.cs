@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using DotNetCore.Tests.Helper;
+using FluentAssertions;
 using NUnit.Framework;
 using System.Diagnostics;
 using System.IO;
@@ -14,14 +15,23 @@ namespace DotNetCore.Tests
         {
             const string rel = "../../../../testmodules/WebDotNetCore";
             var configuration = new DirectoryInfo(".").Parent.Name;
-            var srcDir = Path.Combine(rel, $"bin/{configuration}/netcoreapp2.2");
+            var srcDir = Path.Combine(rel, $"bin/{configuration}/netcoreapp3.0");
             // ensure we have the right dir
             File.Exists(Path.Combine(srcDir, "WebDotNetCore.dll")).Should().BeTrue();
-            var translationFolders = Directory.GetDirectories(srcDir).Where(d => !d.EndsWith("\\publish")).ToArray();
+            // some dirs are ok to exist in output
+            var nonLanguageDirs = new[]
+            {
+                "publish",
+                "Properties"
+            };
+            var translationFolders = Directory
+                .GetDirectories(srcDir)
+                .Where(d => nonLanguageDirs.All(_ => !d.EndsWith(_)))
+                .ToArray();
             translationFolders.Should().HaveCount(0, "because they where embedded into the web project");
 
-            using (var server = WebTestHelper.SetupTestServer(rel))
-            using (var client = server.CreateClient())
+            using (var factory = WebTestHelper.SetupTestFactory(rel))
+            using (var client = factory.CreateClient())
             {
                 async Task<string> SendAsync(string iso)
                 {
@@ -45,7 +55,7 @@ namespace DotNetCore.Tests
         {
             const string rel = "../../../../testmodules/DotNetCoreCli";
             var configuration = new DirectoryInfo(".").Parent.Name;
-            var srcDir = Path.Combine(rel, $"bin/{configuration}/netcoreapp2.2");
+            var srcDir = Path.Combine(rel, $"bin/{configuration}/netcoreapp3.0");
             // ensure we have the right dir
             var run = Path.Combine(srcDir, "DotNetCoreCli.dll");
             File.Exists(run).Should().BeTrue();

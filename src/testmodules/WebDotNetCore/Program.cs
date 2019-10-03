@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+using System.IO;
 
 namespace WebDotNetCore
 {
@@ -7,10 +8,11 @@ namespace WebDotNetCore
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            CreateHostBuilder(args).Build().Run();
         }
 
-        public static IWebHost BuildWebHost(params string[] args) => BuildWebHostBuilder<Startup>(args).Build();
+        public static IHostBuilder CreateHostBuilder(params string[] args)
+            => CreateGenericHostBuilder<Startup>(null, false, args);
 
         /// <summary>
         /// Indirection for integration tests. Allows override with custom class that inherits Startup
@@ -18,10 +20,21 @@ namespace WebDotNetCore
         /// <typeparam name="T"></typeparam>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static IWebHostBuilder BuildWebHostBuilder<T>(params string[] args) where T : Startup
+        public static IHostBuilder CreateGenericHostBuilder<T>(string rootPath, bool devTest, params string[] args) where T : Startup
         {
-            var hostBuilder = WebHost.CreateDefaultBuilder(args)
-                .UseStartup<T>();
+            var hostBuilder = Host
+                .CreateDefaultBuilder(args);
+            if (devTest)
+                hostBuilder.UseEnvironment("Development");
+
+            hostBuilder
+                .ConfigureWebHostDefaults(builder =>
+                {
+                    builder
+                    .UseContentRoot(rootPath ?? Directory.GetCurrentDirectory())
+                    .UseStartup<T>();
+                });
+
             return hostBuilder;
         }
     }

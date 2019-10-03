@@ -81,7 +81,7 @@ namespace ResourceEmbedder.MsBuild.Tests
             // not ideal as it doesn't ensure build is up to date..
             // also must copy multiple files for .net core
 
-            var originalDir = $"{RepositoryLocator.Locate(RepositoryDirectory.SourceCode)}\\testmodules\\Symbols\\NetCorePortable\\bin\\{configuration}\\netcoreapp2.2";
+            var originalDir = $"{RepositoryLocator.Locate(RepositoryDirectory.SourceCode)}\\testmodules\\Symbols\\NetCorePortable\\bin\\{configuration}\\netcoreapp3.0";
             var output = Path.Combine(copyDir, "NetCorePortable.dll");
             var outputPdb = Path.Combine(copyDir, "NetCorePortable.pdb");
             var toCopy = Directory.GetFiles(originalDir, "*.*", SearchOption.AllDirectories);
