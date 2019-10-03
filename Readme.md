@@ -4,6 +4,16 @@ Compatible with .Net Standard 2.0 and .Net 4.6 and above.
 
 [![pipeline](https://dev.azure.com/marcstanlive/Opensource/_apis/build/status/38)](https://dev.azure.com/marcstanlive/Opensource/_build?definitionId=38)
 
+:warning: As of .Net Core 3 single-file publishing exists as an alternative. Where possible consider using it instead of the Resource embedder!
+
+Read [single-file executables](docs/Single%20file%20executables.md) for more details.
+
+## Going forward
+
+Single-file executables technically make the Resource Embedder project obsolete, although there are some use cases (e.g. [manually inject resources](docs/Core%20package%20usage.md)) that aren't (yet) covered natively by .Net Core.
+
+For now no new features are planned for the resource embedder but I will continue to bugfix where the effort is appropriate.
+
 # NuGet references
 
 [Resource.Embedder](https://www.nuget.org/packages/Resource.Embedder/) [![NuGet Status](https://img.shields.io/nuget/v/Resource.Embedder.svg?style=flat)](https://www.nuget.org/packages/Resource.Embedder/)
@@ -29,7 +39,7 @@ After adding the nuget and recompiling: No more seperate files, all localization
 
 By embedding localization files it is possible to create "zero dependency" executables that can simply be deployed and "just run".
 
-In order to embed any reference dll's, consider using [Costura](https://github.com/Fody/Costura) ([which cannot embed satellite assemblies](https://github.com/Fody/Costura/issues/61) due to the way it's integrated into the build process).
+When using resource embedder also consider using [Costura](https://github.com/Fody/Costura) to embed reference assemblies ([which cannot embed satellite assemblies](https://github.com/Fody/Costura/issues/61) due to the way it's integrated into the build process).
 
 # Links 
 
@@ -37,6 +47,7 @@ In order to embed any reference dll's, consider using [Costura](https://github.c
 * [Changelog](docs/Changelog.md)
 * [Core package usage](docs/Core%20package%20usage.md)
 * [Internals](docs/Internals.md)
+* [single file executables in .Net Core 3](docs/Single%20file%20executables.md)
 
 ## Verify it works
 
