@@ -15,7 +15,7 @@ namespace DotNetCore.Tests
         {
             const string rel = "../../../../testmodules/WebDotNetCore";
             var configuration = new DirectoryInfo(".").Parent.Name;
-            var srcDir = Path.Combine(rel, $"bin/{configuration}/netcoreapp3.0");
+            var srcDir = Path.Combine(rel, $"bin/{configuration}/netcoreapp3.1");
             // ensure we have the right dir
             File.Exists(Path.Combine(srcDir, "WebDotNetCore.dll")).Should().BeTrue();
             // some dirs are ok to exist in output
@@ -55,7 +55,7 @@ namespace DotNetCore.Tests
         {
             const string rel = "../../../../testmodules/DotNetCoreCli";
             var configuration = new DirectoryInfo(".").Parent.Name;
-            var srcDir = Path.Combine(rel, $"bin/{configuration}/netcoreapp3.0");
+            var srcDir = Path.Combine(rel, $"bin/{configuration}/netcoreapp3.1");
             // ensure we have the right dir
             var run = Path.Combine(srcDir, "DotNetCoreCli.dll");
             File.Exists(run).Should().BeTrue();
