@@ -24,7 +24,7 @@ Also supports injecting code as module initializer (code is executed when the as
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mono.Cecil" Version="0.11.1" />
+    <PackageReference Include="Mono.Cecil" Version="0.11.2" />
   </ItemGroup>
 
 </Project>
