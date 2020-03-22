@@ -2,8 +2,6 @@
 
 Compatible with .Net Standard 2.0 and .Net 4.6 and above.
 
-[![pipeline](https://dev.azure.com/marcstanlive/Opensource/_apis/build/status/38)](https://dev.azure.com/marcstanlive/Opensource/_build?definitionId=38)
-
 :warning: As of .Net Core 3 single-file publishing exists as an alternative. Where possible consider using it instead of the Resource embedder!
 
 Read [single-file executables](docs/Single%20file%20executables.md) for more details.
