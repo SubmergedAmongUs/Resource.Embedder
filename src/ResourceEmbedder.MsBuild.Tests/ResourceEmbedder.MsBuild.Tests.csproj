@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Modules.TestHelper\Modules.TestHelper.csproj" />
     <ProjectReference Include="..\ResourceEmbedder.MsBuild\ResourceEmbedder.MsBuild.csproj" />
+    <ProjectReference Include="..\testmodules\Symbols\FullFramework\Embedded\Embedded.csproj" />
     <ProjectReference Include="..\testmodules\Symbols\FullFramework\Full\Full.csproj" />
     <ProjectReference Include="..\testmodules\Symbols\FullFramework\None\None.csproj" />
     <ProjectReference Include="..\testmodules\Symbols\FullFramework\PdbOnly\PdbOnly.csproj" />

@@ -19,10 +19,11 @@ namespace ResourceEmbedder.MsBuild.Tests
             return new FileInfo(path).DirectoryName;
         }
 
-        [TestCase("None", "none")]
-        [TestCase("Full", "full")]
-        [TestCase("PdbOnly", "pdb-only")]
-        public void MsBuildBasedEmbeddingWithSymbols(string exeName, string symbols)
+        [TestCase("None", "none", false)]
+        [TestCase("Full", "full", true)]
+        [TestCase("PdbOnly", "pdbonly", true)]
+        [TestCase("Embedded", "embedded", false)]
+        public void MsBuildBasedEmbeddingWithSymbols(string exeName, string symbols, bool copySymbols)
         {
             // copy elsewhere and ensure localization works
             var copyDir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())).FullName;
@@ -31,7 +32,7 @@ namespace ResourceEmbedder.MsBuild.Tests
             File.Copy(originalExe, output, true);
             var originalPdb = Path.ChangeExtension(originalExe, "pdb");
             var outputPdb = Path.ChangeExtension(output, "pdb");
-            if (symbols != "none")
+            if (copySymbols)
                 File.Copy(originalPdb, outputPdb, true);
 
             var pdb = Path.Combine(AssemblyDirectory(), $"{exeName}.pdb");
@@ -57,7 +58,7 @@ namespace ResourceEmbedder.MsBuild.Tests
                 DebugType = symbols
             };
             task.Execute().Should().BeTrue();
-            File.Exists(outputPdb).Should().Be(symbols != "none");
+            File.Exists(outputPdb).Should().Be(copySymbols);
 
             var p = Process.Start(output);
             p.WaitForExit(3000).Should().BeTrue();

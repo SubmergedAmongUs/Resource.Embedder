@@ -89,6 +89,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SingleFileConsole", "src\te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreLibraryWithTranslations", "src\testmodules\CoreLibraryWithTranslations\CoreLibraryWithTranslations.csproj", "{62F248CF-9CA7-43DB-AB3B-8827FC5B1D9D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Embedded", "src\testmodules\Symbols\FullFramework\Embedded\Embedded.csproj", "{C42529EF-1CED-46B5-9D4C-6C329A831713}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -235,6 +237,10 @@ Global
 		{62F248CF-9CA7-43DB-AB3B-8827FC5B1D9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62F248CF-9CA7-43DB-AB3B-8827FC5B1D9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62F248CF-9CA7-43DB-AB3B-8827FC5B1D9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C42529EF-1CED-46B5-9D4C-6C329A831713}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C42529EF-1CED-46B5-9D4C-6C329A831713}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C42529EF-1CED-46B5-9D4C-6C329A831713}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C42529EF-1CED-46B5-9D4C-6C329A831713}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -277,6 +283,7 @@ Global
 		{E4D748EB-2954-440A-B4E4-39D0FE6500C4} = {9B1C4DD1-C3AF-4647-8D00-F2E14A3873C6}
 		{5834C3CE-8BBF-4F8E-8367-C3E30EAB7F8E} = {9EEDC34E-C703-46C6-B5BF-E207CC11F741}
 		{62F248CF-9CA7-43DB-AB3B-8827FC5B1D9D} = {9EEDC34E-C703-46C6-B5BF-E207CC11F741}
+		{C42529EF-1CED-46B5-9D4C-6C329A831713} = {9E964162-1E1F-45D5-9A3A-1266761D13B2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9A84AE46-B050-4F2F-8D4D-5B7DE2E2CABE}
