@@ -20,7 +20,7 @@ jobs:
     - run: nuget restore
     - uses: microsoft/setup-msbuild@v1
     - name: build
-      run: msbuild /p:Configuration=${{ env.Configuration }} /p:"Platform=Any CPU" /p:Version=${{ env.SemVer }}.${{ ${{ GITHUB.RUN_NUMBER }} }} /p:InformationalVersion=${{ env.SemVer }}'
+      run: msbuild /p:Configuration=${{ env.Configuration }} /p:"Platform=Any CPU" /p:Version=${{ env.SemVer }}.${{ GITHUB.RUN_NUMBER }} /p:InformationalVersion=${{ env.SemVer }}'
       shell: cmd
     - name: test dotnet
       run: dotnet test -c Release --no-build src/DotNetCore.Tests/DotNetCore.Tests.csproj
