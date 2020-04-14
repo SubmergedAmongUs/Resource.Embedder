@@ -50,6 +50,7 @@ namespace ResourceEmbedder.MsBuild.Tests
                 AssemblyPath = msBuild,
                 TargetPath = Path.GetFullPath(msBuild),
                 BuildEngine = fakeEngine,
+                DebugType = "none",
                 References = "."
             };
             task.Execute().Should().BeTrue();

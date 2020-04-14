@@ -143,6 +143,7 @@ namespace ResourceEmbedder.MsBuild.Tests
             {
                 ProjectDirectory = ".",
                 AssemblyPath = msBuild,
+                DebugType = "none",
                 TargetPath = Path.GetFullPath(msBuild),
                 BuildEngine = fakeEngine,
                 References = "."

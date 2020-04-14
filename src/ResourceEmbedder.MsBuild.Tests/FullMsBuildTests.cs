@@ -42,6 +42,7 @@ namespace ResourceEmbedder.MsBuild.Tests
                 ProjectDirectory = ".",
                 AssemblyPath = msBuild,
                 TargetPath = Path.GetFullPath(msBuild),
+                DebugType = "none",
                 BuildEngine = fakeEngine,
                 References = "."
             };
@@ -146,7 +147,8 @@ namespace ResourceEmbedder.MsBuild.Tests
                 TargetPath = Path.GetFullPath(msBuild),
                 BuildEngine = fakeEngine,
                 References = ".",
-                DebugSymbols = false
+                DebugSymbols = false,
+                DebugType = "none"
             };
             task.Execute().Should().BeTrue();
 
@@ -185,6 +187,7 @@ namespace ResourceEmbedder.MsBuild.Tests
             {
                 ProjectDirectory = ".",
                 AssemblyPath = msBuild,
+                DebugType = "none",
                 TargetPath = Path.GetFullPath(msBuild),
                 BuildEngine = fakeEngine,
                 References = "."
