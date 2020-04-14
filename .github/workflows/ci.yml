@@ -22,8 +22,11 @@ jobs:
     - name: build
       run: msbuild /p:Configuration=${{ env.Configuration }} /p:"Platform=Any CPU" /p:Version=${{ env.SemVer }}.${{ GITHUB.RUN_NUMBER }} /p:InformationalVersion=${{ env.SemVer }}'
       shell: cmd
-    - name: test dotnet
-      run: dotnet test -c Release --no-build src/DotNetCore.Tests/DotNetCore.Tests.csproj
+    - run: dotnet test -c Release --no-build src/DotNetCore.Tests/DotNetCore.Tests.csproj
+    # glob pattern does not seem to work due to mix of .Net Core & Full Framework tests
+    - run: dotnet vstest "src\testmodules\LocalizationTests\bin\${{ env.Configuration }}\net46\LocalizationTests.dll" --Framework:".NETFramework,Version=4.6"
+    - run: dotnet vstest "src\ResourceEmbedder.Core.Tests\bin\${{ env.Configuration }}\net46\ResourceEmbedder.Core.Tests.dll" --Framework:".NETFramework,Version=4.6"
+    - run: dotnet vstest "src\ResourceEmbedder.MsBuild.Tests\bin\${{ env.Configuration }}\net46\ResourceEmbedder.MsBuild.Tests.dll" --Framework:".NETFramework,Version=4.6"
     - run: |
         dotnet pack src/ResourceEmbedder.Core/ResourceEmbedder.Core.csproj -c ${{ env.Configuration }} -o release/packages -p:PackageVersion=${{ env.SemVer }} --no-build
         dotnet pack src/ResourceEmbedder.MsBuild/ResourceEmbedder.MsBuild.csproj -c ${{ env.Configuration }} -o release/packages -p:PackageVersion=${{ env.SemVer }} --no-build
