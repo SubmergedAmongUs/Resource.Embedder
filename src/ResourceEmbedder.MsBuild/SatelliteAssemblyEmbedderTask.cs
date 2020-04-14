@@ -83,7 +83,7 @@ namespace ResourceEmbedder.MsBuild
             var rp = CecilBasedAssemblyModifier.GetReaderParameters(inputAssembly, searchDirs, symbolReader);
             if (!SignAssembly)
             {
-                if (DebugSymbols && !File.Exists(Path.ChangeExtension(inputAssembly, ".pdb")))
+                if (DebugSymbols && debugSymbolType != DebugSymbolType.Embedded && !File.Exists(Path.ChangeExtension(inputAssembly, ".pdb")))
                 {
                     // can't call ReadModule with DebugSymbols=true when .pdb is missing; since we most likely won't end up producing working output anyway
                     // just ignore the sign assembly check
