@@ -2,7 +2,10 @@ on:
   push:
     branches:
       - master
-
+env:
+  SemVer: 2.0.1
+  Configuration: Release
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
 jobs:
   build:
     runs-on: windows-latest
@@ -17,7 +20,14 @@ jobs:
     - run: nuget restore
     - uses: microsoft/setup-msbuild@v1
     - name: build
-      run: msbuild /p:Configuration=Release /p:"Platform=Any CPU"
+      run: msbuild /p:Configuration=${{ env.Configuration }} /p:"Platform=Any CPU" /p:Version=${{ env.SemVer }}.${{ ${{ GITHUB.RUN_NUMBER }} }} /p:InformationalVersion=${{ env.SemVer }}'
       shell: cmd
     - name: test dotnet
       run: dotnet test -c Release --no-build src/DotNetCore.Tests/DotNetCore.Tests.csproj
+    - run: |
+        dotnet pack src/ResourceEmbedder.Core/ResourceEmbedder.Core.csproj -c ${{ env.Configuration }} -o release/packages -p:PackageVersion=${{ env.SemVer }} --no-build
+        dotnet pack src/ResourceEmbedder.MsBuild/ResourceEmbedder.MsBuild.csproj -c ${{ env.Configuration }} -o release/packages -p:PackageVersion=${{ env.SemVer }} --no-build
+    - uses: actions/upload-artifact@v1
+      with:
+        name: nuget
+        path: release/packages
