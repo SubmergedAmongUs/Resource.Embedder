@@ -30,4 +30,6 @@ The .Net runtime will thus issue [runtime warnings](https://github.com/Fody/Cost
 
 Despite these warnings the .Net Core app will run just fine and is automatically & correctly localized (as the satellite assembles are loaded from the dll's resources) .
 
- Thus these warnings can be safely ignored.
+ These warnings can be ignored at runtime however if you use `dotnet pack` to generate a nuget package you will run into [this error](https://github.com/MarcStan/resource-embedder/issues/19). As a workaround consider using `nuget pack` instead.
+
+ 

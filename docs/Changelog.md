@@ -1,5 +1,9 @@
 # Changelog
 
+**2.1.0**
+
+* Added support for embedded pdb symbols by [0xced](https://github.com/MarcStan/resource-embedder/pull/20)
+
 **2.0.1**
 
 Fix bug for systems with only .Net >= 4.7.2 installed (embedder wouldn't run)
