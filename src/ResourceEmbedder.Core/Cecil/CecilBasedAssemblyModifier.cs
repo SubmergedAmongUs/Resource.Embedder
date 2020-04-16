@@ -22,7 +22,6 @@ namespace ResourceEmbedder.Core.Cecil
         private readonly string _tempSymbolFilePath;
         private readonly IEmbedResources _resourceEmbedder;
         private readonly ISymbolWriterProvider _symbolsWriter;
-        private string _symbolExtension;
 
         /// <summary>
         /// Creates a new modifier that can insert resources and code into an assembly.
@@ -54,18 +53,18 @@ namespace ResourceEmbedder.Core.Cecil
             _tempFilePath = Path.ChangeExtension(Path.GetFullPath(inputAssembly), ".tmp");
             File.Copy(inputAssembly, _tempFilePath, true);
 
-            _symbolExtension = "pdb";
-            var existingSymbolsPath = Path.ChangeExtension(inputAssembly, _symbolExtension);
+            var symbolExtension = "pdb";
+            var existingSymbolsPath = Path.ChangeExtension(inputAssembly, symbolExtension);
             if (!File.Exists(existingSymbolsPath))
             {
-                _symbolExtension = "mdb";
-                existingSymbolsPath = Path.ChangeExtension(inputAssembly, _symbolExtension);
+                symbolExtension = "mdb";
+                existingSymbolsPath = Path.ChangeExtension(inputAssembly, symbolExtension);
             }
 
             // symbols are optional
             if (File.Exists(existingSymbolsPath))
             {
-                _tempSymbolFilePath = $"{Path.ChangeExtension(Path.GetFullPath(existingSymbolsPath), ".tmp")}.{_symbolExtension}";
+                _tempSymbolFilePath = $"{Path.ChangeExtension(Path.GetFullPath(existingSymbolsPath), ".tmp")}.{symbolExtension}";
                 File.Copy(existingSymbolsPath, _tempSymbolFilePath, true);
             }
 
@@ -91,7 +90,7 @@ namespace ResourceEmbedder.Core.Cecil
             var pdb = File.Exists(Path.ChangeExtension(assemblyPath, "pdb"));
             var mdb = File.Exists(Path.ChangeExtension(assemblyPath, "mdb"));
 
-            if (!pdb && !mdb)
+            if (!pdb && !mdb && debugSymbolType != DebugSymbolType.Embedded)
                 return null;
 
             switch (debugSymbolType)
@@ -118,18 +117,17 @@ namespace ResourceEmbedder.Core.Cecil
             var pdb = File.Exists(Path.ChangeExtension(assemblyPath, "pdb"));
             var mdb = File.Exists(Path.ChangeExtension(assemblyPath, "mdb"));
 
-            if (!pdb && !mdb)
+            if (!pdb && !mdb && debugSymbolType != DebugSymbolType.Embedded)
                 return null;
 
             switch (debugSymbolType)
             {
                 case DebugSymbolType.None:
-                // embedded has symbols in dll, could probably extract and rewrite but I have never used this ever
-                case DebugSymbolType.Embedded:
                     return null;
                 case DebugSymbolType.Full:
                 case DebugSymbolType.PdbOnly:
                     return pdb ? (ISymbolWriterProvider)new PdbWriterProvider() : new MdbWriterProvider();
+                case DebugSymbolType.Embedded:
                 case DebugSymbolType.Portable:
                     return new EmbeddedPortablePdbWriterProvider();
                 default:
@@ -188,7 +186,7 @@ namespace ResourceEmbedder.Core.Cecil
         {
             if (_symbolsWriter != null)
             {
-                _logger.Info($"Rewritting {_symbolExtension}");
+                _logger.Info($"Rewriting debug symbols with {_symbolsWriter.GetType().Name}");
             }
             _assemblyDefinition.Write(OutputAssembly, new WriterParameters
             {

@@ -24,6 +24,17 @@ namespace Embedded
             {
                 Environment.Exit(-3);
             }
+            try
+            {
+                throw new Exception("Ensuring that debug symbols are embedded.");
+            }
+            catch (Exception exception)
+            {
+                if (!exception.StackTrace.Contains("Program.cs"))
+                {
+                    Environment.Exit(-4);
+                }
+            }
             Environment.Exit(0);
         }
 
