@@ -1,5 +1,9 @@
 # Changelog
 
+**2.1.1**
+
+* Fix support for embedded pdb symbols by [0xced](https://github.com/MarcStan/resource-embedder/pull/21)
+
 **2.1.0**
 
 * Added support for embedded pdb symbols by [0xced](https://github.com/MarcStan/resource-embedder/pull/20)

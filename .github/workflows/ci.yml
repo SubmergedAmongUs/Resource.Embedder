@@ -3,7 +3,7 @@ on:
     branches:
       - master
 env:
-  SemVer: 2.1.0
+  SemVer: 2.1.1
   Configuration: Release
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
 jobs:
@@ -24,9 +24,9 @@ jobs:
       shell: cmd
     - run: dotnet test -c Release --no-build src/DotNetCore.Tests/DotNetCore.Tests.csproj
     # glob pattern does not seem to work due to mix of .Net Core & Full Framework tests
-    - run: dotnet vstest "src\testmodules\LocalizationTests\bin\${{ env.Configuration }}\net46\LocalizationTests.dll" --Framework:".NETFramework,Version=4.6"
-    - run: dotnet vstest "src\ResourceEmbedder.Core.Tests\bin\${{ env.Configuration }}\net46\ResourceEmbedder.Core.Tests.dll" --Framework:".NETFramework,Version=4.6"
-    - run: dotnet vstest "src\ResourceEmbedder.MsBuild.Tests\bin\${{ env.Configuration }}\net46\ResourceEmbedder.MsBuild.Tests.dll" --Framework:".NETFramework,Version=4.6"
+    - run: dotnet vstest "src\testmodules\LocalizationTests\bin\${{ env.Configuration }}\net46\LocalizationTests.dll" --Framework:".NETFramework,Version=4.61"
+    - run: dotnet vstest "src\ResourceEmbedder.Core.Tests\bin\${{ env.Configuration }}\net46\ResourceEmbedder.Core.Tests.dll" --Framework:".NETFramework,Version=4.61"
+    - run: dotnet vstest "src\ResourceEmbedder.MsBuild.Tests\bin\${{ env.Configuration }}\net46\ResourceEmbedder.MsBuild.Tests.dll" --Framework:".NETFramework,Version=4.72"
     - run: |
         dotnet pack src/ResourceEmbedder.Core/ResourceEmbedder.Core.csproj -c ${{ env.Configuration }} -o release/packages -p:PackageVersion=${{ env.SemVer }} --no-build
         dotnet pack src/ResourceEmbedder.MsBuild/ResourceEmbedder.MsBuild.csproj -c ${{ env.Configuration }} -o release/packages -p:PackageVersion=${{ env.SemVer }} --no-build
