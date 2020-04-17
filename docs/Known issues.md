@@ -32,4 +32,8 @@ Despite these warnings the .Net Core app will run just fine and is automatically
 
  These warnings can be ignored at runtime however if you use `dotnet pack` to generate a nuget package you will run into [this error](https://github.com/MarcStan/resource-embedder/issues/19). As a workaround consider using `nuget pack` instead.
 
- 
+ ## Embedded symbols and .Net Framework
+
+ .NET Framework 4.7.2 is required for proper support of portable/embedded symbols.
+
+See [dotnet issues](https://github.com/microsoft/dotnet/blob/37165eac02f7fdbbc04efffdd32c378ca70c00fa/releases/net471/KnownIssues/517815-BCL%20Stack%20traces%20are%20missing%20source%20information%20for%20frames%20with%20debug%20information%20in%20the%20Portable%20PDB%20format.md) for details.
