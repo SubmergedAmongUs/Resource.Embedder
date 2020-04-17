@@ -23,4 +23,8 @@
     <Compile Include="..\..\..\LocalizeHelper\Localize.cs" Link="Localize.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\SymbolHelper\SymbolHelper.csproj" />
+  </ItemGroup>
+
 </Project>
