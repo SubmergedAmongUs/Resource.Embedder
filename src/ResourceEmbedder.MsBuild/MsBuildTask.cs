@@ -57,8 +57,7 @@ namespace ResourceEmbedder.MsBuild
             return true;
         }
 
-        private bool HasDebugSymbols() => !string.IsNullOrEmpty(DebugType) &&
-                                          !string.Equals(DebugType, "none", StringComparison.OrdinalIgnoreCase);
+        private bool HasDebugSymbols() => !"none".Equals(DebugType, StringComparison.OrdinalIgnoreCase);
 
         #endregion Methods
     }

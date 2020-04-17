@@ -2,12 +2,10 @@
 using SymbolHelper;
 using System;
 
-namespace None
+namespace NetCorePdbOnly
 {
     public static class Program
     {
-        #region Methods
-
         static void Main(string[] args)
         {
             Localize.SwitchLocale("en");
@@ -25,14 +23,11 @@ namespace None
             {
                 Environment.Exit(-3);
             }
-            // no symbols
-            if (Symbols.AreLoaded())
+            if (!Symbols.AreLoaded())
             {
                 Environment.Exit(-4);
             }
             Environment.Exit(0);
         }
-
-        #endregion Methods
     }
 }

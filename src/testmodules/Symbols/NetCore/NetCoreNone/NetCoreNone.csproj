@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net461</TargetFramework>
     <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -18,6 +18,21 @@
   <ItemGroup>
     <Compile Include="..\..\..\LocalizeHelper\Localize.cs" Link="Localize.cs" />
     <Compile Include="..\..\SymbolHelper\Symbols.cs" Link="Symbols.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Translation.Designer.cs">
+      <DependentUpon>Translation.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Translation.resx">
+      <LastGenOutput>Translation.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

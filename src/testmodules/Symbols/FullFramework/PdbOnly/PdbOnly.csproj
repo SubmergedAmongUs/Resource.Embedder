@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net46</TargetFramework>
+    <TargetFramework>net461</TargetFramework>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
 
@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <Compile Include="..\..\..\LocalizeHelper\Localize.cs" Link="Localize.cs" />
+    <Compile Include="..\..\SymbolHelper\Symbols.cs" Link="Symbols.cs" />
   </ItemGroup>
 
 </Project>

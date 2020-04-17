@@ -23,7 +23,8 @@ namespace ResourceEmbedder.MsBuild.Tests
         [TestCase("Full", "full", true)]
         [TestCase("PdbOnly", "pdbonly", true)]
         [TestCase("Embedded", "embedded", false)]
-        public void MsBuildBasedEmbeddingWithSymbols(string exeName, string symbols, bool copySymbols)
+        [TestCase("PortablePdb", "portable", true)]
+        public void MsBuildBasedEmbeddingWithSymbols(string exeName, string symbols, bool hasSymbols)
         {
             // copy elsewhere and ensure localization works
             var copyDir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())).FullName;
@@ -32,10 +33,8 @@ namespace ResourceEmbedder.MsBuild.Tests
             File.Copy(originalExe, output, true);
             var originalPdb = Path.ChangeExtension(originalExe, "pdb");
             var outputPdb = Path.ChangeExtension(output, "pdb");
-            if (copySymbols)
+            if (hasSymbols)
                 File.Copy(originalPdb, outputPdb, true);
-
-            var pdb = Path.Combine(AssemblyDirectory(), $"{exeName}.pdb");
 
             var languages = new[] { "de", "pl" };
             foreach (var lang in languages)
@@ -58,7 +57,7 @@ namespace ResourceEmbedder.MsBuild.Tests
                 DebugType = symbols
             };
             task.Execute().Should().BeTrue();
-            File.Exists(outputPdb).Should().Be(copySymbols);
+            File.Exists(outputPdb).Should().Be(hasSymbols);
 
             var p = Process.Start(output);
             p.WaitForExit(3000).Should().BeTrue();
@@ -66,8 +65,12 @@ namespace ResourceEmbedder.MsBuild.Tests
             Directory.Delete(copyDir, true);
         }
 
-        [Test]
-        public void MsBuildBasedEmbeddingWithPortableSymbolsWorksInNetCore()
+        [TestCase("None", "none", false)]
+        [TestCase("Full", "full", true)]
+        [TestCase("PdbOnly", "pdbonly", true)]
+        [TestCase("Embedded", "embedded", false)]
+        [TestCase("PortablePdb", "portable", true)]
+        public void MsBuildBasedEmbeddingWithPortableSymbolsWorksInNetCore(string exeName, string symbols, bool hasSymbolFile)
         {
             // copy elsewhere and ensure localization works
             var copyDir = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString())).FullName;
@@ -81,9 +84,9 @@ namespace ResourceEmbedder.MsBuild.Tests
             // not ideal as it doesn't ensure build is up to date..
             // also must copy multiple files for .net core
 
-            var originalDir = $"{RepositoryLocator.Locate(RepositoryDirectory.SourceCode)}\\testmodules\\Symbols\\NetCorePortable\\bin\\{configuration}\\netcoreapp3.1";
-            var output = Path.Combine(copyDir, "NetCorePortable.dll");
-            var outputPdb = Path.Combine(copyDir, "NetCorePortable.pdb");
+            var originalDir = $"{RepositoryLocator.Locate(RepositoryDirectory.SourceCode)}\\testmodules\\Symbols\\NetCore\\NetCore{exeName}\\bin\\{configuration}\\netcoreapp3.1";
+            var output = Path.Combine(copyDir, $"NetCore{exeName}.dll");
+            var outputPdb = Path.Combine(copyDir, $"NetCore{exeName}.pdb");
             var toCopy = Directory.GetFiles(originalDir, "*.*", SearchOption.AllDirectories);
             foreach (var srcFile in toCopy)
             {
@@ -103,11 +106,11 @@ namespace ResourceEmbedder.MsBuild.Tests
                 BuildEngine = fakeEngine,
                 References = ".",
                 DebugSymbols = true,
-                DebugType = "portable"
+                DebugType = symbols
             };
             task.Execute().Should().BeTrue();
             File.Exists(output).Should().BeTrue();
-            File.Exists(outputPdb).Should().BeTrue();
+            File.Exists(outputPdb).Should().Be(hasSymbolFile);
 
             var p = Process.Start("dotnet", output);
             p.WaitForExit(3000).Should().BeTrue();

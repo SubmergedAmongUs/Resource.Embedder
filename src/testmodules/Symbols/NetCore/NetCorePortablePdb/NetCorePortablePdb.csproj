@@ -6,7 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\LocalizeHelper\Localize.cs" Link="Localize.cs" />
+    <Compile Include="..\..\..\LocalizeHelper\Localize.cs" Link="Localize.cs" />
+    <Compile Include="..\..\SymbolHelper\Symbols.cs" Link="Symbols.cs" />
   </ItemGroup>
 
   <ItemGroup>

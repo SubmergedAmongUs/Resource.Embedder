@@ -2,12 +2,10 @@
 using SymbolHelper;
 using System;
 
-namespace None
+namespace NetCoreNone
 {
     public static class Program
     {
-        #region Methods
-
         static void Main(string[] args)
         {
             Localize.SwitchLocale("en");
@@ -32,7 +30,5 @@ namespace None
             }
             Environment.Exit(0);
         }
-
-        #endregion Methods
     }
 }

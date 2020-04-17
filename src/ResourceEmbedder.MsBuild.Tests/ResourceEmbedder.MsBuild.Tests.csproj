@@ -21,6 +21,7 @@
     <ProjectReference Include="..\testmodules\Symbols\FullFramework\Full\Full.csproj" />
     <ProjectReference Include="..\testmodules\Symbols\FullFramework\None\None.csproj" />
     <ProjectReference Include="..\testmodules\Symbols\FullFramework\PdbOnly\PdbOnly.csproj" />
+    <ProjectReference Include="..\testmodules\Symbols\FullFramework\PortablePdb\PortablePdb.csproj" />
     <ProjectReference Include="..\testmodules\WpfTest\WpfTest.csproj" />
   </ItemGroup>
 

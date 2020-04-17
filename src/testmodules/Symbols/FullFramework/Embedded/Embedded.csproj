@@ -21,10 +21,7 @@
 
   <ItemGroup>
     <Compile Include="..\..\..\LocalizeHelper\Localize.cs" Link="Localize.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\SymbolHelper\SymbolHelper.csproj" />
+    <Compile Include="..\..\SymbolHelper\Symbols.cs" Link="Symbols.cs" />
   </ItemGroup>
 
 </Project>

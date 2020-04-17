@@ -1,9 +1,10 @@
 ﻿using LocalizeHelper;
+using SymbolHelper;
 using System;
 
 namespace PortablePdb
 {
-    class Program
+    public static class Program
     {
         #region Methods
 
@@ -23,6 +24,10 @@ namespace PortablePdb
             if (Translation.Language != "Polish")
             {
                 Environment.Exit(-3);
+            }
+            if (!Symbols.AreLoaded())
+            {
+                Environment.Exit(-4);
             }
             Environment.Exit(0);
         }
