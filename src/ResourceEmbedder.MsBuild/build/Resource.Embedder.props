@@ -12,9 +12,29 @@
   <!--
   We want to run as soon as the satellite assemblies are generated
 
-  Two AfterTargets because Core* is for .Net Core only and the other one for Full framework only.. luckily MSBuild seems to OR the condition automatically
+  We are using two targets (EmbedderTarget + CoreEmbedderTarget) with idential tasks to handle both
+  `MSBuild` (GenerateSatelliteAssemblies) and `dotnet build` (CoreGenerateSatelliteAssemblies).
+
+  Unfortunately, we can not define the `AfterTargets` attribute value in a property group because the
+  $(GenerateSatelliteAssembliesForCore) property is defined too late in the build process, i.e. this does *not* work:
+
+  <EmbedderTargetAfter Condition=" '$(EmbedderTargetAfter)' == '' and '$(GenerateSatelliteAssembliesForCore)' != 'true' ">GenerateSatelliteAssemblies</EmbedderTargetAfter>
+  <EmbedderTargetAfter Condition=" '$(EmbedderTargetAfter)' == '' and '$(GenerateSatelliteAssembliesForCore)' == 'true' ">CoreGenerateSatelliteAssemblies</EmbedderTargetAfter>
   -->
-  <Target AfterTargets="GenerateSatelliteAssemblies;CoreGenerateSatelliteAssemblies" Name="EmbedderTarget">
+  <Target AfterTargets="GenerateSatelliteAssemblies" Name="EmbedderTarget" Condition=" '$(GenerateSatelliteAssembliesForCore)' != 'true' ">
+    <ResourceEmbedder.MsBuild.SatelliteAssemblyEmbedderTask AssemblyPath="@(IntermediateAssembly)"
+                                                            IntermediateDirectory="$(ProjectDir)$(IntermediateOutputPath)"
+                                                            KeyFilePath="$(AssemblyOriginatorKeyFile)"
+                                                            ProjectDirectory="$(ProjectDir)"
+                                                            TargetPath="$(TargetPath)"
+                                                            SignAssembly="$(EmbedderSignAssembly)"
+                                                            References="@(ReferencePath)"
+                                                            DebugSymbols="$(DebugSymbols)"
+                                                            DebugType="$(DebugType)">
+      <Output TaskParameter="EmbeddedCultures" PropertyName="EmbeddedCultures" />
+    </ResourceEmbedder.MsBuild.SatelliteAssemblyEmbedderTask>
+  </Target>
+  <Target AfterTargets="CoreGenerateSatelliteAssemblies" Name="CoreEmbedderTarget" Condition=" '$(GenerateSatelliteAssembliesForCore)' == 'true' ">
     <ResourceEmbedder.MsBuild.SatelliteAssemblyEmbedderTask AssemblyPath="@(IntermediateAssembly)"
                                                             IntermediateDirectory="$(ProjectDir)$(IntermediateOutputPath)"
                                                             KeyFilePath="$(AssemblyOriginatorKeyFile)"
