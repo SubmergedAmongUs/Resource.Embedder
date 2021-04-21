@@ -66,16 +66,14 @@ namespace ResourceEmbedder.MsBuild
             }
 
             // add target directory where the assembly is compiled to to search path for reference assemblies
-            var searchDirs = new List<string> { new FileInfo(TargetPath).DirectoryName };
+            var searchDirs = new List<string> { Path.GetDirectoryName(TargetPath) };
             // fix for https://github.com/MarcStan/Resource.Embedder/issues/5
             // when references are marked as CopyLocal: False they will not end up at TargetPath when we run this code (instead they may be copied later)
             // so we need to tell Cecil about all the directories where they could be
-            var referenceFiles = References ?? "";
-            var referenceDirs = referenceFiles.Contains(";") ? referenceFiles.Split(';') : new[] { referenceFiles };
 
             // we need the directory path, but the references are all files, so convert and take distinct set
-            searchDirs.AddRange(referenceDirs.Select(f => new FileInfo(f).DirectoryName).Distinct());
-            logger.Info("Looking for references in: {0}", string.Join(", ", searchDirs));
+            searchDirs.AddRange(References.Select(r => Path.GetDirectoryName(r.ItemSpec)).Distinct().OrderBy(e => e));
+            logger.Info("Looking for references in:{0}", searchDirs.Aggregate("", (current, next) => current + Environment.NewLine + "  - " + next));
 
             StrongNameKeyPair signingKey = null;
             var debugSymbolType = DebugSymbolHelper.FromString(DebugType);

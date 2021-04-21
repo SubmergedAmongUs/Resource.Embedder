@@ -29,11 +29,7 @@ namespace ResourceEmbedder.MsBuild
 
         public string DebugType { get; set; }
 
-        /// <summary>
-        /// A semicolon seperated list of reference files.
-        /// All path are full path to the reference dll files.
-        /// </summary>
-        public string References { get; set; }
+        public ITaskItem[] References { get; set; }
 
         #endregion Properties
 
