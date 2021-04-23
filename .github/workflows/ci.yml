@@ -2,6 +2,9 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    branches:
+      - master
 env:
   SemVer: 2.1.1
   Configuration: Release
