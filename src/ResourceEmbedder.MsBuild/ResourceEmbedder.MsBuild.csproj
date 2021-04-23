@@ -32,7 +32,7 @@ Supports: .Net Standard 2.0, .Net Core 2.0 and Net 4.6 and above.
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mono.Cecil" Version="0.11.2" PrivateAssets="All" />
+    <PackageReference Include="Mono.Cecil" Version="0.11.3" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup Condition="$(TargetFramework) == 'netstandard2.0'">
