@@ -52,7 +52,7 @@ namespace ResourceEmbedder.MsBuild.Tests
                 AssemblyPath = output,
                 TargetPath = output,
                 BuildEngine = fakeEngine,
-                References = ".",
+                References = new ITaskItem[0],
                 DebugSymbols = true,
                 DebugType = symbols
             };
@@ -104,7 +104,7 @@ namespace ResourceEmbedder.MsBuild.Tests
                 AssemblyPath = output,
                 TargetPath = output,
                 BuildEngine = fakeEngine,
-                References = ".",
+                References = new ITaskItem[0],
                 DebugSymbols = true,
                 DebugType = symbols
             };
@@ -148,7 +148,7 @@ namespace ResourceEmbedder.MsBuild.Tests
                 DebugType = "none",
                 TargetPath = Path.GetFullPath(msBuild),
                 BuildEngine = fakeEngine,
-                References = "."
+                References = new ITaskItem[0]
             };
             task.Execute().Should().BeTrue();
             task.EmbeddedCultures.Should().ContainAll("de;", "de-DE", "fr");

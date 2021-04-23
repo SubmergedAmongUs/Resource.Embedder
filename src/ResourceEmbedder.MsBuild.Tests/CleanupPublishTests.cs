@@ -51,7 +51,7 @@ namespace ResourceEmbedder.MsBuild.Tests
                 TargetPath = Path.GetFullPath(msBuild),
                 BuildEngine = fakeEngine,
                 DebugType = "none",
-                References = "."
+                References = new ITaskItem[0]
             };
             task.Execute().Should().BeTrue();
             task.EmbeddedCultures.Should().ContainAll("de;", "de-DE", "fr");
