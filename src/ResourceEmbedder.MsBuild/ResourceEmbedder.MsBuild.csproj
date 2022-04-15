@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net46</TargetFrameworks>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <BuildOutputTargetFolder>tasks</BuildOutputTargetFolder>
     <!-- include all refs -->
     <NoPackageAnalysis>true</NoPackageAnalysis>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <!-- nuget -->
-  
+
   <PropertyGroup>
     <PackageId>Resource.Embedder</PackageId>
     <Title>Resource.Embedder</Title>
@@ -24,6 +24,7 @@ Supports: .Net Standard 2.0, .Net Core 2.0 and Net 4.6 and above.
     <RepositoryUrl>https://github.com/MarcStan/Resource.Embedder</RepositoryUrl>
     <PackageIconUrl>https://github.com/MarcStan/Resource.Embedder/raw/master/ico/package.png</PackageIconUrl>
     <PackageTags>Embed Resource Satellite assemblies Localization Cecil</PackageTags>
+    <Version>2.2.0-submerged</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,14 +34,7 @@ Supports: .Net Standard 2.0, .Net Core 2.0 and Net 4.6 and above.
 
   <ItemGroup>
     <PackageReference Include="Mono.Cecil" Version="0.11.3" PrivateAssets="All" />
-  </ItemGroup>
-
-  <ItemGroup Condition="$(TargetFramework) == 'netstandard2.0'">
     <PackageReference Include="Microsoft.Build.Tasks.Core" Version="15.9.20" PrivateAssets="All" />
-  </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework) == 'net46'"> 
-    <Reference Include="Microsoft.Build.Framework" />
-    <Reference Include="Microsoft.Build.Utilities.v4.0" />
   </ItemGroup>
 
   <ItemGroup>

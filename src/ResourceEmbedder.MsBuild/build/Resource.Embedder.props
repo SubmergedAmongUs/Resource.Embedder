@@ -1,14 +1,13 @@
-<Project TreatAsLocalProperty="TaskFolder;TaskAssembly">
+<Project TreatAsLocalProperty="RETaskFolder;RETaskAssembly">
   <PropertyGroup>
-    <TaskFolder Condition=" '$(MSBuildRuntimeType)' == 'Core' ">netstandard2.0</TaskFolder>
-    <TaskFolder Condition=" '$(MSBuildRuntimeType)' != 'Core' ">net46</TaskFolder>
-    <TaskAssembly>$(MSBuildThisFileDirectory)..\tasks\$(TaskFolder)\ResourceEmbedder.MsBuild.dll</TaskAssembly>
+    <RETaskFolder>netstandard2.1</RETaskFolder>
+    <RETaskAssembly>$(MSBuildThisFileDirectory)..\tasks\$(RETaskFolder)\ResourceEmbedder.MsBuild.dll</RETaskAssembly>
     <EmbedderSignAssembly Condition="$(EmbedderSignAssembly) == '' Or $(EmbedderSignAssembly) == '*Undefined*'">$(SignAssembly)</EmbedderSignAssembly>
     <IntermediateDir>$(ProjectDir)$(IntermediateOutputPath)</IntermediateDir>
   </PropertyGroup>
-  <UsingTask TaskName="ResourceEmbedder.MsBuild.SatelliteAssemblyEmbedderTask" AssemblyFile="$(TaskAssembly)" />
-  <UsingTask TaskName="ResourceEmbedder.MsBuild.SatelliteAssemblyCleanupTask" AssemblyFile="$(TaskAssembly)" />
-  <UsingTask TaskName="ResourceEmbedder.MsBuild.SatelliteAssemblyCleanupPublishTask" AssemblyFile="$(TaskAssembly)" />
+  <UsingTask TaskName="ResourceEmbedder.MsBuild.SatelliteAssemblyEmbedderTask" AssemblyFile="$(RETaskAssembly)" />
+  <UsingTask TaskName="ResourceEmbedder.MsBuild.SatelliteAssemblyCleanupTask" AssemblyFile="$(RETaskAssembly)" />
+  <UsingTask TaskName="ResourceEmbedder.MsBuild.SatelliteAssemblyCleanupPublishTask" AssemblyFile="$(RETaskAssembly)" />
   <!--
   We want to run as soon as the satellite assemblies are generated
 
@@ -55,7 +54,7 @@
     then PostBuild will run first, and as noted in issue #9* the user can see/copy all the resource files.
     * https://github.com/MarcStan/Resource.Embedder/issues/9
   -->
-  
+
   <!--
   Condition copied from MSBuild post build event
   TODO: doesn't work correctly, according to MSBuild PostBuildEvent is always empty, except when MSBuild uses it in which case it is correctly filled
