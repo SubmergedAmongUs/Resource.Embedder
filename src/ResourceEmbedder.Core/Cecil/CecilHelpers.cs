@@ -26,7 +26,6 @@ namespace ResourceEmbedder.Core.Cecil
             }
             var type = typeof(InjectedResourceLoader);
             var asm = Assembly.GetAssembly(type);
-            var module = ModuleDefinition.ReadModule(asm.GetLocation());
             const string nameSpace = "ResourceEmbedderCompilerGenerated";
             const string className = "ResourceEmbedderILInjected";
             const string initMethod = "Attach";
@@ -41,6 +40,7 @@ namespace ResourceEmbedder.Core.Cecil
                 }
                 return existingMethod;
             }
+            var module = ModuleDefinition.ReadModule(asm.GetLocation());
             var clonedType = TypeCloner.CloneTo(module.GetType(type.FullName), definition.MainModule, new[]
             {
                 "FindMainAssembly",

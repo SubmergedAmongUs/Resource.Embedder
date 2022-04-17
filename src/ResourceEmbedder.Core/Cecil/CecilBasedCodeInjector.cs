@@ -53,7 +53,7 @@ namespace ResourceEmbedder.Core.Cecil
             }
             catch (Exception ex)
             {
-                Logger.Error("Failed injecting code. {0}", ex.Message);
+                Logger.Error("Failed injecting code. {0}", ex.ToString());
                 return false;
             }
             return true;
