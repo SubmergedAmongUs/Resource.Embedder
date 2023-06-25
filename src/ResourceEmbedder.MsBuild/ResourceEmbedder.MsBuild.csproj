@@ -24,7 +24,7 @@ Supports: .Net Standard 2.0, .Net Core 2.0 and Net 4.6 and above.
     <RepositoryUrl>https://github.com/MarcStan/Resource.Embedder</RepositoryUrl>
     <PackageIconUrl>https://github.com/MarcStan/Resource.Embedder/raw/master/ico/package.png</PackageIconUrl>
     <PackageTags>Embed Resource Satellite assemblies Localization Cecil</PackageTags>
-    <Version>2.2.1-submerged</Version>
+    <Version>2.2.2-submerged</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -39,6 +39,12 @@ Supports: .Net Standard 2.0, .Net Core 2.0 and Net 4.6 and above.
 
   <ItemGroup>
     <ProjectReference Include="..\ResourceEmbedder.Core\ResourceEmbedder.Core.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\..\ResourceEmbedder.SourceGenerator\ResourceEmbedder.SourceGenerator.csproj">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <OutputItemType>Analyzer</OutputItemType>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
   </ItemGroup>
 
   <Target Name="PackTaskDependencies" BeforeTargets="GenerateNuspec">
@@ -51,6 +57,11 @@ Supports: .Net Standard 2.0, .Net Core 2.0 and Net 4.6 and above.
     <ItemGroup>
       <_PackageFiles Include="bin\$(Configuration)\*\*.dll">
         <PackagePath>tasks\%(RecursiveDir)</PackagePath>
+        <Visible>false</Visible>
+        <BuildAction>Content</BuildAction>
+      </_PackageFiles>
+      <_PackageFiles Include="..\..\ResourceEmbedder.SourceGenerator\bin\$(Configuration)\netstandard2.1\ResourceEmbedder.SourceGenerator.dll">
+        <PackagePath>analyzers</PackagePath>
         <Visible>false</Visible>
         <BuildAction>Content</BuildAction>
       </_PackageFiles>
