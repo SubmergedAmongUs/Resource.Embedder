@@ -14,10 +14,7 @@ namespace ResourceEmbedder.SourceGenerator
         {
         }
 
-        const string code = @"#if !RESOURCE_EMBEDDER_SOURCEGEN
-#define RESOURCE_EMBEDDER_SOURCEGEN
-
-// ReSharper disable All
+        const string code = @"// ReSharper disable All
 
 using System;
 using System.IO;
@@ -187,8 +184,6 @@ namespace ResourceEmbedderCompilerGenerated
         }
     }
 }
-
-#endif
 ";
     }
 }

@@ -1,3 +1,9 @@
+## This repo has been modified for personal use.
+
+If you want to use this project, please use the [upstream version](https://github.com/sucrose0413/resource-embedder) instead.
+
+---
+
 # Automatically embeds satellite assemblies into the main assembly
 
 Compatible with .Net Standard 2.0 and .Net 4.6 and above.
